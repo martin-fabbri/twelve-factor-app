@@ -7,6 +7,7 @@ import { v4 } from 'uuid'
 
 const SERVER_PORT = 8080
 dotenv.config()
+const serverName = process.env.SERVER_NAME || 'default'
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -43,5 +44,5 @@ app.post('/upload', upload.single('img'), (req, res) => {
 
 app.use('/images', proxyBaseImageUrl)
 app.listen(SERVER_PORT, () => {
-    console.log(`Server (local port): http://localhost:${SERVER_PORT}`)
+    console.log(`Server (${serverName}): http://localhost:${SERVER_PORT}`)
 })

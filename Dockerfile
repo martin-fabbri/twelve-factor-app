@@ -1,4 +1,6 @@
 FROM mhart/alpine-node
+RUN apk add --no-cache bash coreutils grep sed
+
 WORKDIR /usr/src/app
 RUN mkdir -p uploads
 
