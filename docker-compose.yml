@@ -1,11 +1,11 @@
 version: '3'
 services:
   dev:
-    image: node:10
+    build: .
     volumes:
-      - .:/usr/src/service
-    working_dir: /usr/src/service
-    command: bash -c "yarn install && yarn nodemon -L --watch src --exec 'yarn ts-node src/server.ts'"
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+    command: bash -c "nodemon -L --watch src --exec 'ts-node src/server.ts'"
     ports:
       - 9090:8080
 

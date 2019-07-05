@@ -3,12 +3,22 @@ import express from 'express'
 import proxy from 'express-http-proxy'
 import dotenv from 'dotenv'
 import multer from 'multer'
+import { v4 } from 'uuid'
 
 const SERVER_PORT = 8080
 dotenv.config()
-const multerConf = {
-    dest: process.env.LOCAL_UPLOAD_DEST,
-}
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, process.env.LOCAL_UPLOAD_DEST || 'uploads/')
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${v4()}-${file.originalname}`)
+    },
+})
+const upload = multer({
+    storage,
+})
 
 const baseImgUrl = process.env.BASE_IMAGE_URL
 const proxyBaseImageUrl = baseImgUrl
@@ -25,6 +35,10 @@ const app = express()
 app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => res.render('home'))
+app.post('/upload', upload.single('img'), (req, res) => {
+    console.log(req.body, req.file)
+    res.send('ok')
+})
 
 app.use('/images', proxyBaseImageUrl)
 app.listen(SERVER_PORT, () => {
