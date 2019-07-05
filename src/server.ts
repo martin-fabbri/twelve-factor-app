@@ -32,6 +32,7 @@ const proxyBaseImageUrl = baseImgUrl
     : express.static(path.join(__dirname, 'public/images'))
 
 const app = express()
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => res.render('home'))

@@ -8,4 +8,7 @@ services:
     command: bash -c "nodemon -L --watch src --exec 'ts-node src/server.ts'"
     ports:
       - 9090:8080
-
+    volumes:
+      - appdata:/usr/src/app/uploads
+volumes:
+  appdata:
