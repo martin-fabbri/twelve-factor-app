@@ -1,0 +1,8 @@
+docker build -t app-concurrency .
+
+docker run --name test1 app-concurrency
+
+docker ps -a -f name=test2
+
+docker run --restart always --name test2 app-concurrency
+docker-compose up --scale app-concurrency=3
