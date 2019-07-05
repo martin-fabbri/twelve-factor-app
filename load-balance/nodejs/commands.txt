@@ -1,0 +1,9 @@
+docker build -t app-node .
+docker run -d -e "SERVER_NAME=chicken" -p 8091:8000 --name=chicken app-node
+docker run -d -e "SERVER_NAME=steak" -p 8092:8000 --name=steak app-node
+
+docker run -d -e "SERVER_NAME=chicken" --name=chicken app-node
+docker run -d -e "SERVER_NAME=steak" --name=steak app-node
+docker build -t app-nginx .
+
+docker run -d -p 8080:80 --link chicken --link steak app-nginx
