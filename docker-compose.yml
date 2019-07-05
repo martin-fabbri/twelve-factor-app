@@ -1,8 +1,11 @@
 version: '3'
 services:
-  app:
-    image: mf/epuppy:1.0
-    env_file:
-      - .env
+  dev:
+    image: node:10
+    volumes:
+      - .:/usr/src/service
+    working_dir: /usr/src/service
+    command: bash -c "yarn install && yarn nodemon -L --watch src --exec 'yarn ts-node src/server.ts'"
     ports:
-      -9090:8080
+      - 9090:8080
+
